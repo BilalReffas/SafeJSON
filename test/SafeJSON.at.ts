@@ -31,5 +31,12 @@ describe("SafeJSON", () => {
             });
             assert.deepEqual(sj.at("level1").at("level2").atIndex(1).at("hello").stringValue(), "world");
         });
+        it("should return null", () => {
+            const sj = new SafeJSON({
+                level1: {
+                },
+            });
+            assert.deepEqual(sj.at("level1").at("level2").atIndex(1).at("hello").stringOrNull(), null);
+        });
     });
 });
