@@ -175,4 +175,24 @@ export class SafeJSON {
             return value;
         }
     }
+
+    // Direct dictionary access
+
+    public at(key: string): SafeJSON {
+        if (this.type === Type.dictionary) {
+            return new SafeJSON(this.raw[key]);
+        } else {
+            return new SafeJSON(null);
+        }
+    }
+
+    // Direct array access
+
+    public atIndex(index: number): SafeJSON {
+        if (this.type === Type.array) {
+            return new SafeJSON(this.raw[index]);
+        } else {
+            return new SafeJSON(null);
+        }
+    }
 }
