@@ -2,7 +2,7 @@ import assert from "assert";
 import { SafeJSON } from "../src/SafeJSON";
 
 describe("SafeJSON", () => {
-    describe("at(index)", () => {
+    describe("at(key)", () => {
         it("should return \"value\"", () => {
             const sj = new SafeJSON({
                 level1: {
@@ -26,7 +26,7 @@ describe("SafeJSON", () => {
                         {
 
                         },
-                    ]
+                    ],
                 },
             });
             assert.deepEqual(sj.at("level1").at("level2").atIndex(1).at("hello").stringValue(), "world");

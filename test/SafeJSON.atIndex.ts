@@ -15,7 +15,7 @@ describe("SafeJSON", () => {
                         ],
                     ],
                     [],
-                ]
+                ],
             );
             assert.deepEqual(sj.atIndex(1).atIndex(0).atIndex(1).stringValue(), "value");
         });
@@ -30,7 +30,7 @@ describe("SafeJSON", () => {
                             "world",
                         ],
                     },
-                ]
+                ],
             );
             assert.deepEqual(sj.atIndex(0).at("level1").atIndex(3).stringValue(), "world");
         });
