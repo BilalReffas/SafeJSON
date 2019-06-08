@@ -1,0 +1,9 @@
+language: nodejs
+
+before_script:
+  - npm install --only=dev
+
+script:
+  - npm run build
+  - npm run lint
+  - npm run test
