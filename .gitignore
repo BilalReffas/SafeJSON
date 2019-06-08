@@ -1,0 +1,5 @@
+node_modules/
+.vscode
+*.map
+*.js
+*.d.ts

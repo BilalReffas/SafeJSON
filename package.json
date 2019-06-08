@@ -1,0 +1,25 @@
+{
+  "name": "safe-json",
+  "version": "0.0.1",
+  "description": "Safe interface to JSON and any objects in TypeScript.",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint --project .",
+    "test": "mocha"
+  },
+  "keywords": [
+    "json",
+    "typescript",
+    "any"
+  ],
+  "author": "Samuel Schepp",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/assert": "^1.4.2",
+    "@types/mocha": "^5.2.7",
+    "assert": "^2.0.0",
+    "mocha": "^6.1.4",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
+  }
+}
