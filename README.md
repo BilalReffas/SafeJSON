@@ -21,11 +21,11 @@ const parsedJSON = {
 const object = new SafeJSON(parsedJSON);
 
 // Safe access
-const firstName = object
-    .at("persons")
-    .atIndex(0)
-    .at("firstName")
-    .stringOrDefault("no name");
+const value = object
+  .get("persons")
+  .getAsArray(0)
+  .get("firstName")
+  .stringOrDefault("no name");
 
 // firstName === "John"
 ```

@@ -231,7 +231,7 @@ export class SafeJSON {
 
     // Direct dictionary access
 
-    public at(key: string): SafeJSON {
+    public get(key: string): SafeJSON {
         if (this.type === Type.dictionary) {
             return new SafeJSON(this.raw[key]);
         } else {
@@ -241,9 +241,13 @@ export class SafeJSON {
 
     // Direct array access
 
-    public atIndex(index: number): SafeJSON {
+    public getAsArray(index: number): SafeJSON {
         if (this.type === Type.array) {
-            return new SafeJSON(this.raw[index]);
+            if (index < ((this.raw as any[]).length)) {
+                return new SafeJSON(this.raw[index]);
+            } else {
+                return new SafeJSON(null);
+            }
         } else {
             return new SafeJSON(null);
         }

@@ -10,9 +10,9 @@ class Person {
     public readonly address: Address;
 
     constructor(json: SafeJSON) {
-        this.firstName = json.at("firstName").stringValue();
-        this.lastName = json.at("lastName").stringValue();
-        this.address = new Address(json.at("address"));
+        this.firstName = json.get("firstName").stringValue();
+        this.lastName = json.get("lastName").stringValue();
+        this.address = new Address(json.get("address"));
     }
 }
 
@@ -23,10 +23,10 @@ class Address {
     public readonly country: string;
 
     constructor(json: SafeJSON) {
-        this.street = json.at("street").stringValue();
-        this.postCode = json.at("postCode").stringValue();
-        this.city = json.at("city").stringValue();
-        this.country = json.at("country").stringValue();
+        this.street = json.get("street").stringValue();
+        this.postCode = json.get("postCode").stringValue();
+        this.city = json.get("city").stringValue();
+        this.country = json.get("country").stringValue();
     }
 }
 
@@ -43,9 +43,9 @@ describe("SafeJSON", () => {
             };
             const object = new SafeJSON(parsedJSON);
             const value = object
-                .at("persons")
-                .atIndex(0)
-                .at("firstName")
+                .get("persons")
+                .getAsArray(0)
+                .get("firstName")
                 .stringOrDefault("no name");
 
             assert.deepEqual(value, "John");

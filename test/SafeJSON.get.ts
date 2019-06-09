@@ -2,7 +2,7 @@ import assert from "assert";
 import { SafeJSON } from "../src/SafeJSON";
 
 describe("SafeJSON", () => {
-    describe("at(key)", () => {
+    describe("get(key)", () => {
         it("should return \"value\"", () => {
             const sj = new SafeJSON({
                 level1: {
@@ -11,7 +11,7 @@ describe("SafeJSON", () => {
                     },
                 },
             });
-            assert.deepEqual(sj.at("level1").at("level2").at("key").stringValue(), "value");
+            assert.deepEqual(sj.get("level1").get("level2").get("key").stringValue(), "value");
         });
         it("should return \"world\"", () => {
             const sj = new SafeJSON({
@@ -29,14 +29,14 @@ describe("SafeJSON", () => {
                     ],
                 },
             });
-            assert.deepEqual(sj.at("level1").at("level2").atIndex(1).at("hello").stringValue(), "world");
+            assert.deepEqual(sj.get("level1").get("level2").getAsArray(1).get("hello").stringValue(), "world");
         });
         it("should return null", () => {
             const sj = new SafeJSON({
                 level1: {
                 },
             });
-            assert.deepEqual(sj.at("level1").at("level2").atIndex(1).at("hello").stringOrNull(), null);
+            assert.deepEqual(sj.get("level1").get("level2").getAsArray(1).get("hello").stringOrNull(), null);
         });
         it("should return \"John\"", () => {
             const parsedJSON = {
@@ -49,9 +49,9 @@ describe("SafeJSON", () => {
             };
             const object = new SafeJSON(parsedJSON);
             const value = object
-                .at("persons")
-                .atIndex(0)
-                .at("firstName")
+                .get("persons")
+                .getAsArray(0)
+                .get("firstName")
                 .stringOrDefault("no name");
             assert.deepEqual(value, "John");
         });

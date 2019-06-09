@@ -2,7 +2,7 @@ import assert from "assert";
 import { SafeJSON } from "../src/SafeJSON";
 
 describe("SafeJSON", () => {
-    describe("atIndex(index)", () => {
+    describe("getAsArray(index)", () => {
         it("should return \"value\"", () => {
             const sj = new SafeJSON(
                 [
@@ -17,7 +17,7 @@ describe("SafeJSON", () => {
                     [],
                 ],
             );
-            assert.deepEqual(sj.atIndex(1).atIndex(0).atIndex(1).stringValue(), "value");
+            assert.deepEqual(sj.getAsArray(1).getAsArray(0).getAsArray(1).stringValue(), "value");
         });
         it("should return \"world\"", () => {
             const sj = new SafeJSON(
@@ -32,14 +32,28 @@ describe("SafeJSON", () => {
                     },
                 ],
             );
-            assert.deepEqual(sj.atIndex(0).at("level1").atIndex(3).stringValue(), "world");
+            assert.deepEqual(sj.getAsArray(0).get("level1").getAsArray(3).stringValue(), "world");
         });
         it("should return null", () => {
             const sj = new SafeJSON(
                 [
                 ],
             );
-            assert.deepEqual(sj.atIndex(0).at("level1").atIndex(3).stringOrNull(), null);
+            assert.deepEqual(sj.getAsArray(0).get("level1").getAsArray(3).stringOrNull(), null);
+        });
+        it("should return null at bad array index", () => {
+            const sj = new SafeJSON(
+                [
+                    1,
+                    2,
+                    3,
+                ],
+            );
+            assert.deepEqual(sj.getAsArray(0).numberOrNull(), 1);
+            assert.deepEqual(sj.getAsArray(1).numberOrNull(), 2);
+            assert.deepEqual(sj.getAsArray(2).numberOrNull(), 3);
+            assert.deepEqual(sj.getAsArray(3).numberOrNull(), null);
+            assert.deepEqual(sj.getAsArray(8).numberOrNull(), null);
         });
     });
 });
