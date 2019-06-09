@@ -4,6 +4,17 @@ export class SafeJSON {
 
     // Custom initializer
 
+    /**
+     * Parses the json literal using JSON.parse.
+     *
+     * If the JSON failed to parse, a valid SafeJSON object is still returned.
+     * The type property of this object has the value Type.null.
+     *
+     * Only use this, if the parse error can be ignored.
+     * This function does not throw.
+     *
+     * @param json A json string literal that should be parsed.
+     */
     public static parseJSON(json: string): SafeJSON {
         try {
             const data = JSON.parse(json);
@@ -47,11 +58,19 @@ export class SafeJSON {
 
     // Properties
 
+    /**
+     * The type of the current root object.
+     * This can be used to make decision on futher handling.
+     */
     public readonly type: Type;
     private readonly raw: any;
 
     // Constructor
 
+    /**
+     * Creates the safe interface to any object.
+     * @param object An object that is the result of a JSON parse or any literal.
+     */
     constructor(object: any) {
         this.raw = object;
 
@@ -72,6 +91,17 @@ export class SafeJSON {
 
     // OrNull interface
 
+    /**
+     * Tries to parse a string value and returns it.
+     *
+     * A number is converted to a string using toString().
+     *
+     * A boolean is converted to a string:
+     * - true: "true"
+     * - false: "false"
+     *
+     * @return A string value or null if it cannot be converted.
+     */
     public stringOrNull(): string | null {
         switch (this.type) {
             case Type.string: {
@@ -93,6 +123,18 @@ export class SafeJSON {
         }
     }
 
+    /**
+     * Tries to parse a number value and returns it.
+     *
+     * A string is converted to a number using Number() constructor.
+     * If the result is NaN, null will be returned.
+     *
+     * A boolean is converted to a number:
+     * - true: 1
+     * - false: 0
+     *
+     * @return A number value or null if it cannot be converted.
+     */
     public numberOrNull(): number | null {
         switch (this.type) {
             case Type.string: {
@@ -119,6 +161,19 @@ export class SafeJSON {
         }
     }
 
+    /**
+     * Tries to parse a boolean value and returns it.
+     *
+     * A string is converted to a boolean:
+     * - "true": true
+     * - "false": false
+     *
+     * A number is converted to a boolean:
+     * - 0: false
+     * - any other number: true
+     *
+     * @return A number value or null if it cannot be converted.
+     */
     public booleanOrNull(): boolean | null {
         switch (this.type) {
             case Type.string: {
@@ -146,6 +201,11 @@ export class SafeJSON {
         }
     }
 
+    /**
+     * Tries to return the given object as a dictionary.
+     *
+     * @return A dictionary value or null.
+     */
     public dictionaryOrNull(): { [key: string]: SafeJSON } | null {
         if (this.type === Type.dictionary) {
             return SafeJSON.mapValue(this.raw, (value: any) => {
@@ -156,6 +216,11 @@ export class SafeJSON {
         }
     }
 
+    /**
+     * Tries to return the given object as an array.
+     *
+     * @return An array value or null.
+     */
     public arrayOrNull(): SafeJSON[] | null {
         if (this.type === Type.array) {
             return (this.raw as any[]).map((value) => {

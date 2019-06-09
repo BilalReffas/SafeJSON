@@ -4,7 +4,7 @@
 
 Safe wrapper for any and JSON for TypeScript.
 
-## Usage
+## Example
 
 ```typescript
 // Parse JSON
