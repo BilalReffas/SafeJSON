@@ -11,21 +11,21 @@ describe("SafeJSON", () => {
             const sj = new SafeJSON(String("hello, world"));
             assert.deepEqual(sj.stringOrDefault("hello"), "hello, world");
         });
-        it("should return \"hello\" from number", () => {
+        it("should return \"123.45\" from number", () => {
             const sj = new SafeJSON(123.45);
-            assert.deepEqual(sj.stringOrDefault("hello"), "hello");
+            assert.deepEqual(sj.stringOrDefault("hello"), "123.45");
         });
-        it("shoule return \"hello\" from Number", () => {
+        it("shoule return \"123.45\" from Number", () => {
             const sj = new SafeJSON(Number(123.45));
-            assert.deepEqual(sj.stringOrDefault("hello"), "hello");
+            assert.deepEqual(sj.stringOrDefault("hello"), "123.45");
         });
-        it("should return \"hello\" from boolean", () => {
+        it("should return \"true\" from boolean", () => {
             const sj = new SafeJSON(true);
-            assert.deepEqual(sj.stringOrDefault("hello"), "hello");
+            assert.deepEqual(sj.stringOrDefault("hello"), "true");
         });
-        it("should return \"hello\" from Boolean", () => {
-            const sj = new SafeJSON(Boolean(true));
-            assert.deepEqual(sj.stringOrDefault("hello"), "hello");
+        it("should return \"false\" from Boolean", () => {
+            const sj = new SafeJSON(Boolean(false));
+            assert.deepEqual(sj.stringOrDefault("hello"), "false");
         });
         it("should return \"hello\" from dictionary", () => {
             const sj = new SafeJSON({hello: "world"});

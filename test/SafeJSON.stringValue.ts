@@ -11,21 +11,21 @@ describe("SafeJSON", () => {
             const sj = new SafeJSON(String("hello, world"));
             assert.deepEqual(sj.stringValue(), "hello, world");
         });
-        it("should return \"\" from number", () => {
+        it("should return \"123.45\" from number", () => {
             const sj = new SafeJSON(123.45);
-            assert.deepEqual(sj.stringValue(), "");
+            assert.deepEqual(sj.stringValue(), "123.45");
         });
-        it("shoule return \"\" from Number", () => {
+        it("shoule return \"123.45\" from Number", () => {
             const sj = new SafeJSON(Number(123.45));
-            assert.deepEqual(sj.stringValue(), "");
+            assert.deepEqual(sj.stringValue(), "123.45");
         });
-        it("should return \"\" from boolean", () => {
-            const sj = new SafeJSON(true);
-            assert.deepEqual(sj.stringValue(), "");
+        it("should return \"false\" from boolean", () => {
+            const sj = new SafeJSON(false);
+            assert.deepEqual(sj.stringValue(), "false");
         });
-        it("should return \"\" from Boolean", () => {
+        it("should return \"true\" from Boolean", () => {
             const sj = new SafeJSON(Boolean(true));
-            assert.deepEqual(sj.stringValue(), "");
+            assert.deepEqual(sj.stringValue(), "true");
         });
         it("should return \"\" from dictionary", () => {
             const sj = new SafeJSON({hello: "world"});

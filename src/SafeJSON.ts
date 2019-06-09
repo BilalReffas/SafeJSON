@@ -73,10 +73,23 @@ export class SafeJSON {
     // OrNull interface
 
     public stringOrNull(): string | null {
-        if (this.type === Type.string) {
-            return this.raw;
-        } else {
-            return null;
+        switch (this.type) {
+            case Type.string: {
+                return this.raw;
+            }
+            case Type.number: {
+                return (this.raw as number).toString()
+            }
+            case Type.boolean: {
+                if (this.raw as boolean) {
+                    return "true";
+                } else {
+                    return "false";
+                }
+            }
+            case Type.dictionary: return null;
+            case Type.array: return null;
+            case Type.null: return null;
         }
     }
 
@@ -153,26 +166,29 @@ export class SafeJSON {
     // OrDefault interface
 
     public stringOrDefault(value: string): string {
-        if (this.type === Type.string) {
-            return this.raw;
-        } else {
+        const s = this.stringOrNull()
+        if (s === null) {
             return value;
+        } else {
+            return s;
         }
     }
 
     public numberOrDefault(value: number): number {
-        if (this.type === Type.number) {
-            return this.raw;
-        } else {
+        const n = this.numberOrNull()
+        if (n === null) {
             return value;
+        } else {
+            return n;
         }
     }
 
     public booleanOrDefault(value: boolean): boolean {
-        if (this.type === Type.boolean) {
-            return this.raw;
-        } else {
+        const b = this.booleanOrNull();
+        if (b === null) {
             return value;
+        } else {
+            return b;
         }
     }
 
