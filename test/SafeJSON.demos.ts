@@ -96,5 +96,36 @@ describe("SafeJSON", () => {
             assert.deepEqual(persons[1].address.city, "Berlin");
             assert.deepEqual(persons[1].address.country, "Germany");
         });
+        it("should parse empty Person", () => {
+            const json = `
+            [
+                {
+
+                },
+                {
+
+                }
+            ]
+            `;
+
+            const arr = SafeJSON.parseJSON(json);
+            const persons = arr.arrayValue().map((obj: SafeJSON) => {
+                return new Person(obj);
+            });
+
+            assert.deepEqual(persons[0].firstName, "");
+            assert.deepEqual(persons[0].lastName, "");
+            assert.deepEqual(persons[0].address.street, "");
+            assert.deepEqual(persons[0].address.postCode, "");
+            assert.deepEqual(persons[0].address.city, "");
+            assert.deepEqual(persons[0].address.country, "");
+
+            assert.deepEqual(persons[1].firstName, "");
+            assert.deepEqual(persons[1].lastName, "");
+            assert.deepEqual(persons[1].address.street, "");
+            assert.deepEqual(persons[1].address.postCode, "");
+            assert.deepEqual(persons[1].address.city, "");
+            assert.deepEqual(persons[1].address.country, "");
+        });
     });
 });
