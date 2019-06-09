@@ -78,7 +78,7 @@ export class SafeJSON {
                 return this.raw;
             }
             case Type.number: {
-                return (this.raw as number).toString()
+                return (this.raw as number).toString();
             }
             case Type.boolean: {
                 if (this.raw as boolean) {
@@ -94,18 +94,55 @@ export class SafeJSON {
     }
 
     public numberOrNull(): number | null {
-        if (this.type === Type.number) {
-            return this.raw;
-        } else {
-            return null;
+        switch (this.type) {
+            case Type.string: {
+                const n = Number(this.raw);
+                if (isNaN(n)) {
+                    return null;
+                } else {
+                    return n;
+                }
+            }
+            case Type.number: {
+                return (this.raw as number);
+            }
+            case Type.boolean: {
+                if (this.raw as boolean) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+            case Type.dictionary: return null;
+            case Type.array: return null;
+            case Type.null: return null;
         }
     }
 
     public booleanOrNull(): boolean | null {
-        if (this.type === Type.boolean) {
-            return this.raw;
-        } else {
-            return null;
+        switch (this.type) {
+            case Type.string: {
+                if (this.raw === "true") {
+                    return true;
+                } else if (this.raw === "false") {
+                    return false;
+                } else {
+                    return null;
+                }
+            }
+            case Type.number: {
+                if (this.raw === 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            case Type.boolean: {
+                return this.raw;
+            }
+            case Type.dictionary: return null;
+            case Type.array: return null;
+            case Type.null: return null;
         }
     }
 
@@ -166,7 +203,7 @@ export class SafeJSON {
     // OrDefault interface
 
     public stringOrDefault(value: string): string {
-        const s = this.stringOrNull()
+        const s = this.stringOrNull();
         if (s === null) {
             return value;
         } else {
@@ -175,7 +212,7 @@ export class SafeJSON {
     }
 
     public numberOrDefault(value: number): number {
-        const n = this.numberOrNull()
+        const n = this.numberOrNull();
         if (n === null) {
             return value;
         } else {

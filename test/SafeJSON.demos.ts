@@ -1,7 +1,34 @@
 import assert from "assert";
 import { SafeJSON } from "../src/SafeJSON";
 import { Type } from "../src/Type";
-import { Person } from "./Person";
+
+// tslint:disable max-classes-per-file
+
+class Person {
+    public readonly firstName: string;
+    public readonly lastName: string;
+    public readonly address: Address;
+
+    constructor(json: SafeJSON) {
+        this.firstName = json.at("firstName").stringValue();
+        this.lastName = json.at("lastName").stringValue();
+        this.address = new Address(json.at("address"));
+    }
+}
+
+class Address {
+    public readonly street: string;
+    public readonly postCode: string;
+    public readonly city: string;
+    public readonly country: string;
+
+    constructor(json: SafeJSON) {
+        this.street = json.at("street").stringValue();
+        this.postCode = json.at("postCode").stringValue();
+        this.city = json.at("city").stringValue();
+        this.country = json.at("country").stringValue();
+    }
+}
 
 describe("SafeJSON", () => {
     describe("Demos", () => {
@@ -32,7 +59,7 @@ describe("SafeJSON", () => {
                     "lastName": "Appleseed",
                     "address": {
                         "street": "Main Street 1",
-                        "postCode": "2213",
+                        "postCode": 2213,
                         "city": "Washington DC",
                         "country": "USA"
                     }
@@ -42,7 +69,7 @@ describe("SafeJSON", () => {
                     "lastName": "Mustermann",
                     "address": {
                         "street": "Hauptstraße 1",
-                        "postCode": "34223",
+                        "postCode": 34223,
                         "city": "Berlin",
                         "country": "Germany"
                     }

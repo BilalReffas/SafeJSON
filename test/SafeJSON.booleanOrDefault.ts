@@ -11,6 +11,14 @@ describe("SafeJSON", () => {
             const sj = new SafeJSON(String("hello, world"));
             assert.deepEqual(sj.booleanOrDefault(true), true);
         });
+        it("should return true from parsable string", () => {
+            const sj = new SafeJSON("true");
+            assert.deepEqual(sj.booleanOrDefault(true), true);
+        });
+        it("should return false from parsable String", () => {
+            const sj = new SafeJSON(String("false"));
+            assert.deepEqual(sj.booleanOrDefault(true), false);
+        });
         it("should return true from number", () => {
             const sj = new SafeJSON(123.45);
             assert.deepEqual(sj.booleanOrDefault(true), true);
@@ -18,6 +26,14 @@ describe("SafeJSON", () => {
         it("shoule return true from Number", () => {
             const sj = new SafeJSON(Number(123.45));
             assert.deepEqual(sj.booleanOrDefault(true), true);
+        });
+        it("should return false from number", () => {
+            const sj = new SafeJSON(0);
+            assert.deepEqual(sj.booleanOrDefault(true), false);
+        });
+        it("shoule return false from Number", () => {
+            const sj = new SafeJSON(Number(0));
+            assert.deepEqual(sj.booleanOrDefault(true), false);
         });
         it("should return false from boolean", () => {
             const sj = new SafeJSON(false);
